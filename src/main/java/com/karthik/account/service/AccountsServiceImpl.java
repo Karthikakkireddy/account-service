@@ -3,8 +3,11 @@ package com.karthik.account.service;
 import com.karthik.account.constants.AccountsConstants;
 import com.karthik.account.domain.Accounts;
 import com.karthik.account.domain.Customer;
+import com.karthik.account.dto.AccountsDto;
 import com.karthik.account.dto.CustomerDto;
 import com.karthik.account.exception.CustomerAlreadyExistsException;
+import com.karthik.account.exception.ResourceNotFoundException;
+import com.karthik.account.mapper.AccountsMapper;
 import com.karthik.account.mapper.CustomerMapper;
 import com.karthik.account.repository.AccountsRepo;
 import com.karthik.account.repository.CustomerRepo;
@@ -40,9 +43,6 @@ public class AccountsServiceImpl implements IAccountsService
 
         Customer savedCustomer = customerRepo.save(customer);
         accountsRepo.save(createNewAccount(savedCustomer));
-
-
-
     }
 
     private Accounts createNewAccount(Customer customer) {
@@ -60,5 +60,27 @@ public class AccountsServiceImpl implements IAccountsService
 
         return newAccount;
     }
+
+
+    @Override
+    public CustomerDto fetchAccount(String mobileNumber)
+    {
+            Customer customer = customerRepo.findByMobileNumber(mobileNumber).orElseThrow(
+                    () -> new ResourceNotFoundException("Customer", "mobileNumber", mobileNumber)
+            );
+
+
+            Accounts account = accountsRepo.findByCustomerId(customer.getCustomerId()).orElseThrow(
+                    () -> new ResourceNotFoundException("Account", "customerId", customer.getCustomerId().toString())
+            );
+
+            CustomerDto customerDto = CustomerMapper.mapToCustomerDto(customer, new CustomerDto());
+            AccountsDto accountsDto = AccountsMapper.mapToAccountsDto(account, new AccountsDto());
+            customerDto.setAccountsDto(accountsDto);
+
+            return customerDto;
+    }
+
+
 
 }
