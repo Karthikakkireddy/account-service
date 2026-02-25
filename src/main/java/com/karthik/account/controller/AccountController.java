@@ -5,6 +5,7 @@ import com.karthik.account.constants.AccountsConstants;
 import com.karthik.account.dto.CustomerDto;
 import com.karthik.account.dto.ResponseDto;
 import com.karthik.account.service.IAccountsService;
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
