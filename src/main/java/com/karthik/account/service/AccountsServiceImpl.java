@@ -38,8 +38,7 @@ public class AccountsServiceImpl implements IAccountsService
                     +customerDto.getMobileNumber());
         }
 
-        customer.setCreatedAt(LocalTime.now());
-        customer.setCreatedBy("Anonymous");
+
 
         Customer savedCustomer = customerRepo.save(customer);
         accountsRepo.save(createNewAccount(savedCustomer));
@@ -54,8 +53,6 @@ public class AccountsServiceImpl implements IAccountsService
         newAccount.setAccountType(AccountsConstants.SAVINGS);
         newAccount.setBranchAddress(AccountsConstants.ADDRESS);
 
-        newAccount.setCreatedAt(LocalTime.now());
-        newAccount.setCreatedBy("Anonymous");
 
 
         return newAccount;
@@ -104,7 +101,8 @@ public class AccountsServiceImpl implements IAccountsService
     }
 
     @Override
-    public boolean deleteAccount(String mobileNumber) {
+    public boolean deleteAccount(String mobileNumber)
+    {
         Customer customer = customerRepo.findByMobileNumber(mobileNumber).orElseThrow(
                 () -> new ResourceNotFoundException("Customer", "mobileNumber", mobileNumber)
         );
