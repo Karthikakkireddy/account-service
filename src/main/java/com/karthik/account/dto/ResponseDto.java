@@ -15,15 +15,13 @@ public class ResponseDto
 {
 
     @Schema(
-            description = "Status code in response",
-            example = "200"
+            description = "Status code in response"
 
     )
     private String statusCode;
 
     @Schema(
-            description = "Status message in response",
-            example = "Request processed successfully"
+            description = "Status message in response"
 
     )
     private String statusMsg;
