@@ -1,5 +1,5 @@
 #start with the bass image containing Java runtime
-FROM openjdk:17-jdk-slim
+FROM eclipse-temurin:21-jdk
 
 # MAINTAINER instruction is deprecated in favor of using label
 # MAINTAINER eazybytes.com
